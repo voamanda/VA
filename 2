@@ -1,0 +1,84 @@
+{
+  "functions": [
+    {
+      "name": "get_cat_facts",
+      "description": "Fetches cat facts from the Cat Facts API.",
+      "url": "https://catfact.ninja/facts",
+      "response_check": {
+        "success_code": 200,
+        "data_processing": {
+          "extract": "fact",
+          "output_format": "DataFrame",
+          "show_head": 5
+        }
+      },
+      "error_message": "Failed to retrieve data from Cat Facts API"
+    },
+    {
+      "name": "get_users_data",
+      "description": "Fetches user data from the JSONPlaceholder API.",
+      "url": "https://jsonplaceholder.typicode.com/users",
+      "response_check": {
+        "success_code": 200,
+        "data_processing": {
+          "extract": {
+            "Name": "name",
+            "Email": "email",
+            "City": "address.city"
+          },
+          "output_format": "DataFrame",
+          "show_head": 5
+        }
+      },
+      "error_message": "Failed to retrieve data from JSONPlaceholder API"
+    },
+    {
+      "name": "get_weather_data",
+      "description": "Fetches weather data from Open-Meteo API.",
+      "url": "https://api.open-meteo.com/v1/forecast",
+      "parameters": {
+        "latitude": 35.6895,
+        "longitude": 139.6917,
+        "hourly": ["temperature_2m"]
+      },
+      "response_check": {
+        "success_code": 200,
+        "data_processing": {
+          "extract": {
+            "Time": "hourly.time",
+            "Temperature (°C)": "hourly.temperature_2m"
+          },
+          "output_format": "DataFrame",
+          "show_head": 5
+        }
+      },
+      "error_message": "Failed to retrieve data from Open-Meteo API"
+    },
+    {
+      "name": "check_input",
+      "description": "Checks user input and calls the appropriate API based on keywords.",
+      "input_parameter": "user_input",
+      "conditions": [
+        {
+          "keyword": "cat",
+          "action": "get_cat_facts"
+        },
+        {
+          "keyword": "user",
+          "action": "get_users_data"
+        },
+        {
+          "keyword": "weather",
+          "action": "get_weather_data"
+        }
+      ],
+      "default_message": "No matching condition for input. Please enter 'cat', 'user', or 'weather'."
+    },
+    {
+      "name": "get_user_input",
+      "description": "Prompts the user for input and calls the check_input function.",
+      "prompt": "Enter a keyword (cat, user, or weather): ",
+      "function_call": "check_input"
+    }
+  ]
+}

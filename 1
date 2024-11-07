@@ -1,0 +1,19 @@
+import requests
+import pandas as pd
+
+url = "https://catfact.ninja/facts"
+
+response = requests.get(url)
+
+if response.status_code == 200:
+    data = response.json()
+    
+    cat_facts = [fact['fact'] for fact in data['data']]
+    
+    facts_df = pd.DataFrame({
+        'Cat Fact': cat_facts
+    })
+    
+    print(facts_df.head(5))
+else:
+    print("Failed to retrieve data")

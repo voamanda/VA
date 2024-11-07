@@ -1,0 +1,76 @@
+{
+  "openai_api_key": "AtsleguIevietotSeit",
+  "tools": [
+    {
+      "type": "function",
+      "function": {
+        "name": "get_cat_fact",
+        "description": "Fetches a random cat fact",
+        "url": "https://catfact.ninja/fact",
+        "response_handling": {
+          "success_code": 200,
+          "output": "fact",
+          "error_message": "Could not retrieve a cat fact."
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "get_http_cat_401",
+        "description": "Fetches an HTTP 401 image of a cat",
+        "url": "https://http.cat/401",
+        "response_handling": {
+          "output": "https://http.cat/401"
+        }
+      }
+    },
+    {
+      "type": "function",
+      "function": {
+        "name": "get_place_bear",
+        "description": "Fetches an image of a bear from placebear.com",
+        "url": "https://placebear.com/200/300",
+        "response_handling": {
+          "output": "https://placebear.com/200/300"
+        }
+      }
+    }
+  ],
+  "assistant": {
+    "name": "API Assistant",
+    "instructions": "You are an assistant with access to custom tools that return cat facts, HTTP cat images, and bear images.",
+    "model": "gpt-4o-mini"
+  },
+  "thread": {
+    "created": true,
+    "message": {
+      "role": "user",
+      "content": "Tell me a cat fact, show me a 401 cat image, and a bear image."
+    }
+  },
+  "run_status": {
+    "completed": false,
+    "attempt": 1,
+    "retry_interval": 2,
+    "action_required": true,
+    "tool_calls": [
+      {
+        "name": "get_cat_fact",
+        "output": null
+      },
+      {
+        "name": "get_http_cat_401",
+        "output": null
+      },
+      {
+        "name": "get_place_bear",
+        "output": null
+      }
+    ]
+  },
+  "final_response": {
+    "status": "completed",
+    "messages": "Final response from the assistant."
+  }
+}
